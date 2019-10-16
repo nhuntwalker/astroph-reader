@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup as soup
 
+from check_lexicon import make_readable, remove_latex_fmt
+
 ASTROPH_URL = "https://arxiv.org/list/astro-ph/new"
 
 response = requests.get(ASTROPH_URL)
@@ -28,4 +30,8 @@ for article in new_articles:
     }
     formatted_articles.append(formatted_article)
 
-print(formatted_articles)
+print(
+    make_readable(
+        remove_latex_fmt(formatted_articles[0]["abstract"])
+    )
+)
