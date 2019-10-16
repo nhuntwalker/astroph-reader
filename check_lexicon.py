@@ -19,9 +19,18 @@ def check_lexicon(text: str) -> None:
     print(f"These are the words that aren't recognized: { unknowns }")
 
 
+def extract_text_from_latex(text: str) -> str:
+    """Extract text from within latex formatting."""
+    format_codes = [r"{\\bf ([^}]*)}"]
+    for code in format_codes:
+        text = re.sub(code, '\\1', text)
+    return text
+
+
 def remove_latex_fmt(text: str) -> str:
     """Remove latex symbols that don't have meaning for reading."""
-    format_codes = [r'\\bf ', '~', '\$', r'\\it']
+    text = extract_text_from_latex(text)
+    format_codes = ['~', '\$']
     for code in format_codes:
         text = re.sub(code, '', text)
 
@@ -49,4 +58,4 @@ def make_readable(text: str) -> str:
         if word in mappings:
             words[idx] = mappings[word]
     
-    return ' '.join(words)
+    return ' '.join(words).replace('  ', ' ')
