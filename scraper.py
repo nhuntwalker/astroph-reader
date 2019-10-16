@@ -12,8 +12,16 @@ new_articles = html.dl.find_all('dd')
 formatted_articles = []
 
 for article in new_articles:
-    title = article.find('div', attrs={'class': 'list-title'}).text.strip().replace('Title: ', '')
-    abstract = article.find('p', attrs={'class': 'mathjax'}).text.strip().replace('\n', ' ')
+    title = article.find(
+        'div',
+        attrs={'class': 'list-title'}
+    ).text.strip().replace('Title: ', '')
+    
+    abstract = article.find(
+        'p',
+        attrs={'class': 'mathjax'}
+    ).text.strip().replace('\n', ' ')
+
     formatted_article = {
         "title": title,
         "abstract": abstract
